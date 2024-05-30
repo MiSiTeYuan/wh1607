@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    index
+
+    <script>
+      fetch("/api/test");
+      /** post json */
+      fetch("/api/getOne", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          n: 1,
+          m: 2,
+        }),
+      });
+      /**  post formData */
+
+      // 假设你有一个表单的数据对象
+      const formData = {
+        name: "John Doe",
+        age: 30,
+      };
+
+      // 将表单数据转换为查询字符串
+      const queryString = Object.keys(formData)
+        .map(
+          (key) =>
+            encodeURIComponent(key) + "=" + encodeURIComponent(formData[key])
+        )
+        .join("&");
+
+      fetch("/api/formdata", {
+        method: "post",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: queryString,
+      });
+
+      fetch("/api/rs");
+    </script>
+  </body>
+</html>
