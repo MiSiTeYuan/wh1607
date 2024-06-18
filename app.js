@@ -5,6 +5,8 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser');
 const logger = require('./common/logger')
+const session = require('express-session')
+
 /**
  * 
  */
@@ -18,6 +20,12 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    maxAge: 1 * 60 * 60 * 1000 // 1 hours
+}));
 
 app.use(requestLog)
 /** */
