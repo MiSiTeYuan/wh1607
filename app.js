@@ -43,7 +43,7 @@ app.use('*', (req, res) => {
 /**handle error */
 app.use((err, req, res, next) => {
     logger.error(err)
-    res.status(500).send('500')
+    res.status(500).send(err)
 })
 
 app.listen(3000, '127.0.0.1', () => {
