@@ -6,28 +6,34 @@ const path = require('path')
 const bodyParser = require('body-parser');
 const logger = require('./common/logger')
 const session = require('express-session')
+const cookieParser = require('cookie-parser');
 
 /**
  * 
  */
 const { requestLog } = require('./middlewares/request_log')
+const { auth } = require('./middlewares/auth')
 
 /**
  * 
  */
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')))
-
+app.use(cookieParser('keyboard cat'));
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
+//
 app.use(session({
+    name: 'sessionId',
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: true,
-    maxAge: 1 * 60 * 60 * 1000 // 1 hours
+    saveUninitialized: false,   // false，未初始化的session的cookie将不会在response中设置
+    maxAge: 1 * 60 * 60 * 1000, // 1 hours
+    // store: new redisStore()     // (使用redis的存储session)
 }));
 
 app.use(requestLog)
+app.use(auth)
 /** */
 app.use(require('./routes'))
 

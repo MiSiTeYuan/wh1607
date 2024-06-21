@@ -9,7 +9,13 @@ const appendFilePromisify = mayJunPromisify(fs.appendFile);
  * @returns 
  */
 async function getAllLines(path) {
-
+    //  
+    try {
+        await mayJunPromisify(fs.access)(path, fs.constants.F_OK);
+    } catch (error) {
+        fs.writeFileSync(path, '', () => { })
+    }
+    //
     const buffer = await readFilePromisify(path)
     let content = buffer.toString();
     let line = null;

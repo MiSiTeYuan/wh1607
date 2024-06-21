@@ -1,8 +1,20 @@
 const router = require('express').Router();
 const path = require('path')
 const { wrap } = require('../common')
+const { gen_session } = require('../middlewares/auth')
+
 const { getAllLines, appendLine } = require('../common/txtUtil')
 const userDbPath = path.resolve(__dirname, '../', 'db/user.txt')
+
+const crypto = require('crypto');
+
+const Hmac = (val, secret) => {
+    secret = secret || 'abcd'
+    const hmac = crypto.createHmac('sha256', secret)
+        .update(val)
+        .digest('Base64');
+    return hmac;
+}
 
 /**提交注册信息 */
 router.post('/signup', wrap(async (req, res, next) => {
@@ -33,13 +45,27 @@ router.post('signout', (req, res, next) => {
     next('signout')
 })
 
-router.post('/login', (req, res, next) => {
+router.post('/login', wrap(async (req, res, next) => {
     // params
     // validate  getUser->没找到或者psd不通过 
     // gen_session 
     // redirect 
-    next()
-});
+    const { username, password } = req.body;
+    if (!username || !password) {
+        return res.status(500).send(`username or password required`)
+    }
+    const records = await getAllLines(userDbPath);
+    console.log(records)
+    const user = records.find(item => item.username === username);
+    if (!user) {
+        return res.status(500).send(`user does not exist`)
+    }
+    if (user.password != password) {
+        return res.status(500).send(`username or password is wrong`)
+    }
+    gen_session(user.username, res)
+    res.redirect('/')
+}));
 
 // router.post('/login', sign.login);
 // router.get('/active_account', sign.activeAccount);  //帐号激活
