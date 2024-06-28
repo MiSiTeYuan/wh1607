@@ -7,6 +7,17 @@ const bodyParser = require('body-parser');
 const logger = require('./common/logger')
 const session = require('express-session')
 const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose')
+
+mongoose.connect('mongodb://127.0.0.1:27017/admin')
+
+mongoose.connection.on("connected", function () {
+    console.log("连接成功");
+})
+
+mongoose.connection.on('error', function (err) {
+    console.log(`连接异常，${err}`);
+})
 
 /**
  * 
