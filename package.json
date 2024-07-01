@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/yuanzishu-JSer/express-demo#readme",
   "dependencies": {
+    "async": "^1.5.2",
+    "bcryptjs": "^2.4.3",
     "body-parse": "^0.1.0",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
@@ -26,8 +28,12 @@
     "express-log4js": "^0.3.0",
     "express-session": "^1.18.0",
     "log4js": "^6.9.1",
+    "moment": "^2.30.1",
     "mongoose": "^6.10.5",
     "node-uuid": "^1.4.8",
-    "nodemon": "^3.1.1"
+    "nodemailer": "^6.9.14",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "nodemon": "^3.1.1",
+    "utility": "^1.18.0"
   }
 }

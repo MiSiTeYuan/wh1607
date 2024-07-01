@@ -60,7 +60,7 @@ app.use('*', (req, res) => {
 /**handle error */
 app.use((err, req, res, next) => {
     logger.error(err)
-    res.status(500).send(err)
+    res.status(500).send(`服务器内部错误`)
 })
 
 app.listen(3000, '127.0.0.1', () => {
