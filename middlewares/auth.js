@@ -60,7 +60,18 @@ async function auth(req, res, next) {
     }
 }
 
+
+function userRequired (req, res, next) {
+    next();
+}
+
+function adminRequired(req, res, next) {
+    next();
+}
+
 module.exports = {
     gen_session,
-    auth
+    auth,
+    userRequired,
+    adminRequired
 }

@@ -1,2 +1,0 @@
-{"username":"002","password":123456,"rptpassword":123456,"email":"625267341@qq.com"}
-{"username":"007","password":123456,"rptpassword":123456,"email":"625267341@qq.com"}

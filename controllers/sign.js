@@ -1,5 +1,3 @@
-const router = require('express').Router();
-const { wrap } = require('../common')
 const { gen_session } = require('../middlewares/auth')
 const tools = require('../common/tools')
 const utility = require('utility')
@@ -9,7 +7,7 @@ const config = require('../config')
 const userProxy = require('../proxy/user');
 
 /**提交注册信息 */
-router.post('/signup', wrap(async (req, res, next) => {
+exports.signup = async (req, res, next) => {
     /*** validate todo */
     /*** duplicate */
     /*** create&save */
@@ -33,16 +31,16 @@ router.post('/signup', wrap(async (req, res, next) => {
     // 发送激活邮件 
     mail.sendActiveMail(email, utility.md5(email + passhash + config.session_secret), username);
     res.status(200).send('我们已给您的注册邮箱发送了一封邮件，请点击里面的链接来激活您的帐号。')
-}));
+}
 
 /** signout */
-router.post('signout', (req, res, next) => {
+exports.signout = (req, res, next) => {
     req.session.destroy();
     res.clearCookie('token', { path: '/' });
     res.redirect('/');
-})
+}
 
-router.post('/login', wrap(async (req, res, next) => {
+exports.login = async (req, res, next) => {
     // params
     // validate  getUser->没找到或者psd不通过 
     // gen_session 
@@ -63,10 +61,11 @@ router.post('/login', wrap(async (req, res, next) => {
     }
     gen_session(username, res) // todo 
     res.redirect('/')
-}));
+}
+
 
 //帐号激活
-router.get('/active_account', wrap(async (req, res, next) => {
+exports.activeAccount = async (req, res, next) => {
     const { key, name } = req.query;
     if (!key || !name) {
         return res.status(500).send(`参数错误`)
@@ -78,11 +77,4 @@ router.get('/active_account', wrap(async (req, res, next) => {
     user.active = true;
     await user.save()
     res.status(200).send(`active_account success`)
-}));
-
-
-
-// router.post('/search_pass', sign.updateSearchPass);  // 更新密码
-// router.post('/reset_pass', sign.updatePass);  // 更新密码
-
-module.exports = router;
+}

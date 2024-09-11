@@ -23,8 +23,26 @@ const TopicSchema = new Schema({
     last_reply_at: { type: Date, default: Date.now },
 
     deleted: { type: Boolean, default: false }
-})
+},
+    {
+        toObject: {
+            getters: true, // include  virtual and path getters
+            transform: function (doc, ret, options) {
+                ret.id = ret._id;
+                delete ret._id;
+                return ret
+            }
+        }
+    })
 
 TopicSchema.plugin(BaseModel);
+
+TopicSchema.virtual('full').get(function () {
+    return this.title + ' ' + this.content;
+});
+ 
+TopicSchema.path('title').get(function (title) {
+    return title;
+});
 
 module.exports = model('Topic', TopicSchema)
