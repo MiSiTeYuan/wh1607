@@ -29,7 +29,7 @@ const { auth } = require('./middlewares/auth')
  * 
  */
 const app = express();
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'club-front/dist')))
 app.use(cookieParser('keyboard cat'));
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));

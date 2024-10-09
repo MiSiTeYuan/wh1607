@@ -14,17 +14,6 @@
    description: 'CNode：Node.js专业中文社区', // 社区的描述
    keywords: 'nodejs, node, express, connect, socket.io',
  
-   // 添加到 html head 中的信息
-   site_headers: [
-     '<meta name="author" content="EDP@TAOBAO" />'
-   ],
-   site_logo: '/public/images/cnodejs_light.svg', // default is `name`
-   site_icon: '/public/images/cnode_icon_32.png', // 默认没有 favicon, 这里填写网址
-   // 右上角的导航区
-   site_navs: [
-     // 格式 [ path, title, [target=''] ]
-     [ '/about', '关于' ]
-   ],
    // cdn host，如 http://cnodejs.qiniudn.com
    site_static_host: '', // 静态文件存储域名
    // 社区的域名
